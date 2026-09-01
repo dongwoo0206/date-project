@@ -12,13 +12,12 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe6e6; /* 연한 핑크색 배경 */
+            background-color: #ffe6e6;
             font-family: '맑은 고딕', sans-serif;
-            overflow: hidden; /* 버튼이 도망갈 때 스크롤 방지 */
+            overflow: hidden;
             text-align: center;
         }
 
-        /* 화면들을 감싸는 틀 */
         .screen {
             display: flex;
             flex-direction: column;
@@ -60,18 +59,33 @@
         #noBtn {
             background-color: #cccccc;
             color: white;
+            /* 도망가는 애니메이션을 부드럽게 만들어주는 옵션 */
+            transition: top 0.2s ease, left 0.2s ease, background-color 0.2s ease; 
         }
-        
-        /* 성공 화면의 추가 텍스트 꾸미기 */
+
         .success-message {
             font-size: 1.5rem;
             color: #555;
             margin-top: 10px;
+            margin-bottom: 30px; /* 아래 버튼과의 간격 띄우기 */
+        }
+
+        /* 다시 도전해보기 버튼 꾸미기 */
+        #resetBtn {
+            background-color: #99ccff;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+        }
+
+        #resetBtn:hover {
+            background-color: #66b3ff;
         }
     </style>
 </head>
 <body>
 
+    <!-- 첫 번째 화면: 질문과 버튼 -->
     <div id="questionScreen" class="screen">
         <h1>나랑 데이트 할래? 👀</h1>
         <div class="button-container">
@@ -80,14 +94,18 @@
         </div>
     </div>
 
+    <!-- 두 번째 화면: 성공 시 나타날 화면 -->
     <div id="successScreen" class="screen" style="display: none;">
         <h1>야호! 데이트 확정! 🎉</h1>
         <p class="success-message">기대할게! 조만간 연락할게 ❤️</p>
+        <!-- 다시 도전해보기 버튼 추가 -->
+        <button id="resetBtn">다시 도전해보기 🔄</button>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const questionScreen = document.getElementById('questionScreen');
         const successScreen = document.getElementById('successScreen');
 
@@ -102,12 +120,22 @@
             this.style.top = `${y}px`;
         });
 
-        // '응 좋아!' 버튼 클릭 시 화면 전환 기능
+        // '응 좋아!' 버튼 클릭 시 화면 전환
         yesBtn.addEventListener('click', function() {
-            // 질문 화면은 숨기고 (display: none)
             questionScreen.style.display = 'none';
-            // 성공 화면을 보여줌 (display: flex)
             successScreen.style.display = 'flex';
+        });
+
+        // '다시 도전해보기' 버튼 클릭 시 초기화
+        resetBtn.addEventListener('click', function() {
+            // 1. 성공 화면 숨기고 질문 화면 다시 띄우기
+            successScreen.style.display = 'none';
+            questionScreen.style.display = 'flex';
+
+            // 2. 도망갔던 '싫어..' 버튼 위치를 원래대로 복구하기
+            noBtn.style.position = 'static';
+            noBtn.style.left = 'auto';
+            noBtn.style.top = 'auto';
         });
     </script>
 
