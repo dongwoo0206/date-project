@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나랑 데이트 할래?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6; /* 연한 핑크색 배경 */
+            font-family: '맑은 고딕', sans-serif;
+            overflow: hidden; /* 버튼이 도망갈 때 스크롤 방지 */
+            text-align: center;
+        }
+
+        /* 화면들을 감싸는 틀 */
+        .screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff9999;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background-color: #ff6666;
+        }
+
+        #noBtn {
+            background-color: #cccccc;
+            color: white;
+        }
+        
+        /* 성공 화면의 추가 텍스트 꾸미기 */
+        .success-message {
+            font-size: 1.5rem;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="questionScreen" class="screen">
+        <h1>나랑 데이트 할래? 👀</h1>
+        <div class="button-container">
+            <button id="yesBtn">응 좋아! ❤️</button>
+            <button id="noBtn">싫어.. 💔</button>
+        </div>
+    </div>
+
+    <div id="successScreen" class="screen" style="display: none;">
+        <h1>야호! 데이트 확정! 🎉</h1>
+        <p class="success-message">기대할게! 조만간 연락할게 ❤️</p>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionScreen = document.getElementById('questionScreen');
+        const successScreen = document.getElementById('successScreen');
+
+        // '싫어..' 버튼 도망가는 기능
+        noBtn.addEventListener('mouseover', function() {
+            this.style.position = 'absolute';
+            
+            const x = Math.random() * (window.innerWidth - this.offsetWidth);
+            const y = Math.random() * (window.innerHeight - this.offsetHeight);
+            
+            this.style.left = `${x}px`;
+            this.style.top = `${y}px`;
+        });
+
+        // '응 좋아!' 버튼 클릭 시 화면 전환 기능
+        yesBtn.addEventListener('click', function() {
+            // 질문 화면은 숨기고 (display: none)
+            questionScreen.style.display = 'none';
+            // 성공 화면을 보여줌 (display: flex)
+            successScreen.style.display = 'flex';
+        });
+    </script>
+
+</body>
+</html>
